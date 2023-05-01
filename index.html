@@ -1,64 +1,83 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title>Sonny Coco</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>My Animation</title>
     <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-        }
-        #container {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #000;
-            overflow: hidden;
-        }
-        #text {
-            font-family: sans-serif;
-            font-size: 4em;
-            font-weight: bold;
-            color: #f50;
-            text-shadow: 0 0 10px #f50, 0 0 20px #f50, 0 0 40px #f50, 0 0 80px #f50;
-        }
+      body {
+        background-color: #1c1c1c;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+      }
+
+      #animation-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      #animation-container h1 {
+        font-size: 10rem;
+        font-weight: 900;
+        color: #fff;
+        text-shadow: 0 0 1rem #f50;
+        text-transform: uppercase;
+      }
+
+      #soundcloud {
+        position: absolute;
+        bottom: 5vh;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #f50;
+        font-size: 2rem;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      #rss-feed {
+        position: absolute;
+        bottom: 5vh;
+        right: 50%;
+        transform: translateX(50%);
+        color: #fff;
+        font-size: 2rem;
+        font-weight: bold;
+        text-decoration: none;
+      }
     </style>
-</head>
-<body>
-    <div id="container">
-        <div id="text">Sonny Coco</div>
+  </head>
+  <body>
+    <div id="animation-container">
+      <h1>Sonny Coco</h1>
     </div>
+    <a href="https://soundcloud.com/sonny-nakos" id="soundcloud">SoundCloud</a>
+    <a href="https://feeds.soundcloud.com/users/soundcloud:users:618901308/sounds.rss" id="rss-feed">RSS</a>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
     <script>
-        // Fetch the RSS feed and parse the XML data
-        fetch('https://feeds.soundcloud.com/users/soundcloud:users:618901308/sounds.rss')
-            .then(response => response.text())
-            .then(data => {
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(data, 'text/xml');
-                const items = xml.querySelectorAll('item');
-                const links = [];
+      const tl = gsap.timeline();
 
-                // Extract the URLs for each item in the feed
-                items.forEach(item => {
-                    const link = item.querySelector('link').textContent;
-                    links.push(link);
-                });
-
-                // Add click event listener to the text element
-                const text = document.getElementById('text');
-                text.addEventListener('click', () => {
-                    // Choose a random URL from the links array
-                    const randomLink = links[Math.floor(Math.random() * links.length)];
-                    window.open(randomLink, '_blank');
-                });
-            });
-
-        // Animate the text element using GSAP
-        gsap.from('#text', { duration: 2, opacity: 0, y: -100 });
+      tl.from("h1", {
+        duration: 2,
+        opacity: 0,
+        y: 100,
+        ease: "power4.out",
+      }).from(
+        "h1",
+        {
+          duration: 1.5,
+          skewX: 30,
+          scale: 1.5,
+          ease: "power4.out",
+        },
+        "-=1.5"
+      );
     </script>
-</body>
+  </body>
 </html>
