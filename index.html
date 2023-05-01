@@ -1,62 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sonny Coco</title>
     <meta charset="utf-8">
+    <title>Sonny Coco</title>
     <style>
-        body {
+        html, body {
             margin: 0;
             padding: 0;
+            height: 100%;
+        }
+        #container {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
             overflow: hidden;
         }
-        canvas {
-            display: block;
-        }
-        #logo {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        #text {
             font-family: sans-serif;
             font-size: 4em;
-            color: #fff;
-            text-align: center;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font-weight: bold;
+            color: #f50;
+            text-shadow: 0 0 10px #f50, 0 0 20px #f50, 0 0 40px #f50, 0 0 80px #f50;
         }
     </style>
 </head>
 <body>
-    <div id="logo">
-        <div>Sonny Coco</div>
-        <div>
-            <a href="https://soundcloud.com/sonny-nakos" target="_blank">SoundCloud</a>
-        </div>
+    <div id="container">
+        <div id="text">Sonny Coco</div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.0/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.0/TextPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
     <script>
-        // select the logo div
-        const logo = document.querySelector('#logo');
+        // Fetch the RSS feed and parse the XML data
+        fetch('https://feeds.soundcloud.com/users/soundcloud:users:618901308/sounds.rss')
+            .then(response => response.text())
+            .then(data => {
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(data, 'text/xml');
+                const items = xml.querySelectorAll('item');
+                const links = [];
 
-        // create a timeline for the animation
-        const tl = gsap.timeline({
-            defaults: {
-                duration: 1.5,
-                ease: 'power2.inOut'
-            }
-        });
+                // Extract the URLs for each item in the feed
+                items.forEach(item => {
+                    const link = item.querySelector('link').textContent;
+                    links.push(link);
+                });
 
-        // animate the logo
-        tl.from(logo, { opacity: 0 })
-            .to(logo, { duration: 1, text: "Welcome" })
-            .to(logo, { duration: 1, text: "to" })
-            .to(logo, { duration: 1, text: "Sonny Coco" })
-            .to(logo, { duration: 1, text: "on" })
-            .to(logo, { duration: 1, text: "SoundCloud" })
-            .to(logo, { opacity: 0, delay: 1 })
-            .set(logo, { display: 'none' });
+                // Add click event listener to the text element
+                const text = document.getElementById('text');
+                text.addEventListener('click', () => {
+                    // Choose a random URL from the links array
+                    const randomLink = links[Math.floor(Math.random() * links.length)];
+                    window.open(randomLink, '_blank');
+                });
+            });
 
+        // Animate the text element using GSAP
+        gsap.from('#text', { duration: 2, opacity: 0, y: -100 });
     </script>
 </body>
 </html>
