@@ -63,6 +63,53 @@
     color: #fff;
   }
   
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  label {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  input {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    border: none;
+  }
+  
+  textarea {
+    width: 100%;
+    height: 10rem;
+    padding: 1rem;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    border: none;
+  }
+  
+  button[type="submit"] {
+    padding: 1rem 2rem;
+    background-color: #1c1c1c;
+    color: #fff;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #fff;
+    color: #1c1c1c;
+  }
+  
 </style>
 
 </head>
@@ -73,67 +120,49 @@
     <button class="btn">Get Started</button>
   </section>
   <section class="section2">
-    <h1>About Me</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget elit auctor, bibendum odio a, consectetur nulla. Etiam et turpis purus. Nam ullamcorper, ipsum non consequat venenatis, ipsum est cursus orci, ut maximus odio metus vel libero.</p>
+        <h1>About Me</h1>
+    <p>My name is John Doe and I'm a web developer. I have over 5 years of experience in building websites and web applications. I'm proficient in HTML, CSS, JavaScript and various web development frameworks such as React, Angular and Vue.</p>
   </section>
   <section class="section3">
     <h1>My Skills</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget elit auctor, bibendum odio a, consectetur nulla. Etiam et turpis purus. Nam ullamcorper, ipsum non consequat venenatis, ipsum est cursus orci, ut maximus odio metus vel libero.</p>
+    <ul>
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JavaScript</li>
+      <li>React</li>
+      <li>Angular</li>
+      <li>Vue</li>
+    </ul>
   </section>
   <section class="section4">
     <h1>Contact Me</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget elit auctor, bibendum odio a, consectetur nulla. Etiam et turpis purus. Nam ullamcorper, ipsum non consequat venenatis, ipsum est cursus orci, ut maximus odio metus vel libero.</p>
+    <p>If you're interested in working with me or have any questions, feel free to contact me using the form below:</p>
+    <form>
+      <label for="name">Name:</label><br>
+      <input type="text" id="name" name="name"><br>
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" name="email"><br>
+      <label for="message">Message:</label><br>
+      <textarea id="message" name="message"></textarea><br>
+      <button type="submit">Submit</button>
+    </form>
   </section>
-  
-  <script>
-    const sections = document.querySelectorAll("section");
-    
-    gsap.from("h1", {
-      duration: 3,
-      opacity: 0,
-      y: -100,
-      ease: "bounce.out",
-      stagger: 0.2
-    
-    });
-    
-    gsap.from("p", {
-      duration: 2,
-      opacity: 0,
-      y: 50,
-      stagger: 0.2
-    });
-    
-        gsap.from(".btn", {
-      duration: 1,
-      opacity: 0,
-      y: 50,
-      delay: 2
-    });
-    
-    sections.forEach((section) => {
-      let tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top center",
-          end: "bottom center",
-          toggleActions: "play pause resume reverse"
-        }
-      });
-      
-      tl.from(section.querySelector("h1"), {
-        
-        opacity: 0,
-        y: -100,
-        ease: "bounce.out"
-      });
-      
-      tl.from(section.querySelector("p"), {
-        
-        opacity: 0,
-        y: 50
-      });
-    });
-  </script>
 </body>
+<script>
+// Target the heading, paragraph, and button in the first section
+const heading = document.querySelector('.section1 h1');
+const paragraph = document.querySelector('.section1 p');
+const button = document.querySelector('.section1 button');
+
+// Set the initial state of the elements
+gsap.set([heading, paragraph, button], { opacity: 0, y: 50 });
+
+// Create a timeline for the animation
+const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
+
+// Add animation to the elements
+tl.to(heading, { opacity: 1, y: 0, duration: 0.8 })
+  .to(paragraph, { opacity: 1, y: 0, duration: 0.8 }, '-=0.6')
+  .to(button, { opacity: 1, y: 0, duration: 0.8 }, '-=0.4');
+  </script>
 </html>
