@@ -163,6 +163,28 @@ const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 tl.to(heading, { opacity: 1, y: 0, duration: 0.8 })
   .to(paragraph, { opacity: 1, y: 0, duration: 0.8 }, '-=0.6')
   .to(button, { opacity: 1, y: 0, duration: 0.8 }, '-=0.4');
+  
+// scroll to About Me section
+const aboutMeBtn = document.querySelector('.btn-about');
+const aboutMeSection = document.querySelector('.section2');
+aboutMeBtn.addEventListener('click', () => {
+  gsap.to(window, {duration: 1, scrollTo: aboutMeSection});
+});
+
+// scroll to My Skills section
+const mySkillsBtn = document.querySelector('.btn-skills');
+const mySkillsSection = document.querySelector('.section3');
+mySkillsBtn.addEventListener('click', () => {
+  gsap.to(window, {duration: 1, scrollTo: mySkillsSection});
+});
+
+// scroll to Contact Me section
+const contactMeBtn = document.querySelector('.btn-contact');
+const contactMeSection = document.querySelector('.section4');
+contactMeBtn.addEventListener('click', () => {
+  gsap.to(window, {duration: 1, scrollTo: contactMeSection});
+});
+  
   </script>
   </body>
 
