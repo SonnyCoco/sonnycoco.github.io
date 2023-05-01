@@ -164,6 +164,38 @@ tl.to(heading, { opacity: 1, y: 0, duration: 0.8 })
   .to(paragraph, { opacity: 1, y: 0, duration: 0.8 }, '-=0.6')
   .to(button, { opacity: 1, y: 0, duration: 0.8 }, '-=0.4');
   
+// Scroll animation for each section
+const sections = document.querySelectorAll('section');
+const windowHeight = window.innerHeight;
+
+sections.forEach(section => {
+  const sectionTop = section.getBoundingClientRect().top;
+  
+  gsap.set(section, { y: sectionTop, opacity: 0 });
+  
+  ScrollTrigger.create({
+    trigger: section,
+    onEnter: () => {
+      gsap.to(section, {
+        duration: 0.8,
+        opacity: 1,
+        y: 0,
+        ease: 'power2.out',
+      });
+    },
+    onLeaveBack: () => {
+      gsap.to(section, {
+        duration: 0.8,
+        opacity: 0,
+        y: -sectionTop,
+        ease: 'power2.out',
+      });
+    },
+    start: () => `top+=${sectionTop + windowHeight / 3}`,
+    end: () => `bottom-=${sectionTop + windowHeight / 3}`,
+  });
+});
+
 // scroll to About Me section
 const aboutMeBtn = document.querySelector('.btn-about');
 const aboutMeSection = document.querySelector('.section2');
@@ -185,7 +217,8 @@ contactMeBtn.addEventListener('click', () => {
   gsap.to(window, {duration: 1, scrollTo: contactMeSection});
 });
   
-  </script>
+</script>
+
   </body>
 
 </html>
